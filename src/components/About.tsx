@@ -23,13 +23,11 @@ const About = () => {
    <section id='about' className="min-h-screen bg-gradient-to-b from-teal-50 to-white py-20">
     {/* Container- Ana wrapper */}
       <div className='container mx-auto px-4 py-20'>
-
         {/* Container - Başlık için*/}
         <div className='text-center max-w-3xl mx-auto mb-16'>
           <h2 className='text-4xl md:text-5xl font-bold text-gray-800 mb-4'>Hizmetlerimiz</h2>
           <p className='text-xl text-gray-600 leading-relaxed'>Sağlıklı yaşam hedeflerinize ulaşmak için kapsamlı diyetisyen hizmetleri sunuyoruz</p>
           </div>
-
         {/* Grid- 4 kartı yan yana dizmek*/}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {/* Kart 1*/}
@@ -47,7 +45,6 @@ const About = () => {
                   Kilo ver 
                 </button>
               </div>
-
             </div>
             <div className={cardStyles.card}>
               <div className={cardStyles.cardContext}>
@@ -63,7 +60,6 @@ const About = () => {
                   Kilo Al
                 </button>
               </div>
-
             </div>
             <div className={cardStyles.card}>
               <div className={cardStyles.cardContext}>
@@ -79,7 +75,6 @@ const About = () => {
                   Performansı Artır
                 </button>
               </div>
-
             </div>
             <div className={cardStyles.card}>
               <div className={cardStyles.cardContext}>
@@ -95,10 +90,7 @@ const About = () => {
                   Sağlığımı Koru
                 </button>
               </div>
-
             </div>
-          
-         
         </div>
       </div>
    </section>
