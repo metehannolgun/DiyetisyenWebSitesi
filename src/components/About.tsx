@@ -1,6 +1,3 @@
-import React from 'react'
-
-
 const cardStyles ={
   card: "bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-all duration-300",
   cardContext: "text-center",

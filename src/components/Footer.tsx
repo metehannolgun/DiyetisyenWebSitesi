@@ -1,5 +1,3 @@
-import React from 'react'
-
 // Uyumlu, sade footer: sosyal ikonlar ve geliştirici imzası
 const Footer = () => {
   return (
