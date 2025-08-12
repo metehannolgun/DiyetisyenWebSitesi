@@ -1,5 +1,6 @@
-import React from 'react'
+import { useState, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
+import emailjs from '@emailjs/browser'
 
 // Form data type'ı tanımla
 type FormData = {
@@ -14,12 +15,54 @@ type FormData = {
   adres: string
 }
 
+// Env değerlerini bir kez oku
+const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID as string
+const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID as string
+const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY as string
+
 const Contact = () => {
   const { register, handleSubmit, formState: { errors } } = useForm<FormData>()
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [status, setStatus] = useState<null | { type: 'success' | 'error', message: string }>(null)
 
-  const onSubmit = (data: FormData) => {
-    console.log(data)
-    // EmailJS burada kullanılacak
+  // EmailJS init (bazı sürümlerde gerekli)
+  useEffect(() => {
+    if (publicKey) {
+      emailjs.init({ publicKey })
+    }
+  }, [])
+
+  const onSubmit = async (data: FormData) => {
+    setIsSubmitting(true)
+    setStatus(null)
+    try {
+      if (!serviceId || !templateId || !publicKey) {
+        throw new Error('EmailJS env değişkenleri eksik.')
+      }
+
+      await emailjs.send(
+        serviceId,
+        templateId,
+        {
+          ad: data.ad,
+          soyad: data.soyad,
+          telefon: data.telefon,
+          email: data.email,
+          cinsiyet: data.cinsiyet,
+          dogumTarihi: data.dogumTarihi,
+          kilo: data.kilo,
+          boy: data.boy,
+          adres: data.adres,
+        }
+      )
+
+      setStatus({ type: 'success', message: 'Mesajınız başarıyla gönderildi.' })
+    } catch (error) {
+      console.error(error)
+      setStatus({ type: 'error', message: 'Gönderim sırasında bir hata oluştu. Lütfen tekrar deneyin.' })
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -236,12 +279,21 @@ const Contact = () => {
                 )}
               </div>
 
+              {status && (
+                <div
+                  className={`${status.type === 'success' ? 'bg-green-50 text-green-700 border-green-200' : 'bg-red-50 text-red-700 border-red-200'} border px-4 py-3 rounded`}
+                >
+                  {status.message}
+                </div>
+              )}
+
               {/* Submit Button */}
               <button
                 type="submit"
-                className="w-full bg-teal-600 text-white py-3 px-6 rounded-lg hover:bg-teal-700 transition-colors duration-300"
+                disabled={isSubmitting}
+                className={`w-full text-white py-3 px-6 rounded-lg transition-colors duration-300 ${isSubmitting ? 'bg-teal-400 cursor-not-allowed' : 'bg-teal-600 hover:bg-teal-700'}`}
               >
-                Formu Gönder
+                {isSubmitting ? 'Gönderiliyor...' : 'Formu Gönder'}
               </button>
             </form>
           </div>

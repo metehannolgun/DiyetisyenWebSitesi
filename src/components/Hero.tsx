@@ -1,6 +1,10 @@
-import React from 'react'
-
 const Hero = () => {
+  const handleScrollTo = (targetId: string) => {
+    const el = document.querySelector(targetId)
+    if (!el) return
+    ;(el as HTMLElement).scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }
+
   return (
     <section id='home' className='min-h-screen bg-gradient-to-br from teal-700 to teal-800 via-teal-800 flex items-center justify-center relative'>
         {/*Background Overlay */}
@@ -21,10 +25,14 @@ const Hero = () => {
             <p className='text-xl md:text-2xl mb-8 text-teal-100 leading-relaxed max-w-2xl mx-auto'>Profesyonel diyetisyen hizmetleri ile hedeflerinize ulaşın.</p>
 
             <div className='flex flex-col sm:flex-row gap-4 justify-center items-center'>
-            <button className='bg-white text-teal-700 px-8 py-4 rounded-full font-semibold hover:bg-teal-50 hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl'>
+            <button className='bg-white text-teal-700 px-8 py-4 rounded-full font-semibold hover:bg-teal-50 hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl'
+                onClick={() => handleScrollTo('#contact')}
+            >
                 İletişim Formu
             </button>
-            <button  className='border-2 border-white/30 text-white px-8 py-4 rounded-full font-semibold hover:bg-white/10 hover:border-white/50 transition-all duration-300 backdrop-blur-sm'>
+            <button  className='border-2 border-white/30 text-white px-8 py-4 rounded-full font-semibold hover:bg-white/10 hover:border-white/50 transition-all duration-300 backdrop-blur-sm'
+                onClick={() => handleScrollTo('#about')}
+            >
                 Hakkımızda
             </button>
             </div>
